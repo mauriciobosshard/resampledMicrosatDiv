@@ -15,7 +15,7 @@
 ### 
 
 
-### 							INSTRUCTIONS
+### 				INSTRUCTIONS
 ### 
 ### Loading the function into your workspace:
 ### 
