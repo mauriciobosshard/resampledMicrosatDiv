@@ -67,9 +67,13 @@
 # microsatellite motif length as an integer and return their diversity 
 # index as a scalar
 
-allelic.richness = function(x, motif_length) length(unique(x))
+allelic.richness = function(x, motif_length){
+	length(unique(x))
+}
 
-allelic.range = function(x, motif_length) (range(x)[2]-range(x)[1]) / motif_length
+allelic.range = function(x, motif_length){
+	(range(x)[2]-range(x)[1]) / motif_length
+}
 
 MSD = function(x, motif_length){
 	Sum = 0
