@@ -40,21 +40,27 @@
 ### Parameters:
 ### 
 ### 	x: a standard genepop file as input
+###
 ### 	ploidy: if data are haploid it should be 1, if diploid 2, etc.
+###
 ### 	motif_lengths: the lengths of the microsatellite motifs (e.g. if
 ### 				   you have AT, AG, AT, AAT, CG it should be 
-###					   c(2,2,2,3,2) )
+###				   c(2,2,2,3,2) )
+###
 ### 	iterations: number of iterations. There is a default of 1000.
+###
 ### 	fn: the function used to calculate the diversity index, can be 
 ### 	    allelic.richness, allelic.range, He (expected heterozigocity) 
-### 		or MSD (mean squared distance).
+### 	    or MSD (mean squared distance).
+###
 ### 	min.size: the minimum size (in alleles not individuals) 
-###				  a pop has no have at a locus to be used (else NA is 
-### 			  returned), defaults to 8 * ploidy
+###		  a pop has no have at a locus to be used (else NA is 
+### 		  returned), defaults to 8 * ploidy
+###
 ### 	resampling.size: the number of alleles of resampled populations,
-### 					 defaults to min.size and is not recommended to
-### 					 exceed this value. Only results with the same 
-### 					 resampling.size are comparable.
+### 			 defaults to min.size and is not recommended to
+### 			 exceed this value. Only results with the same 
+### 			 resampling.size are comparable.
 ### 	
 ### Citation:	
 ### 	
