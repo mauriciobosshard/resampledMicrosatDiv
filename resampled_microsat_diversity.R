@@ -21,7 +21,7 @@
 ### 
 ### 	Simply copy-paste the contents of this file into the R console.
 ### 	Anternatively use the source() function or the menu provided by
-###		your GUI.
+###	your GUI.
 ### 
 ### Running the script:
 ### 
@@ -51,16 +51,22 @@
 ###
 ### 	fn: the function used to calculate the diversity index, can be 
 ### 	    allelic.richness, allelic.range, He (expected heterozigocity) 
-### 	    or MSD (mean squared distance).
+### 	    or MSD (mean squared distance). Advanced users may use a 
+###			custom function modelled after functions below.
 ###
 ### 	min.size: the minimum size (in alleles not individuals) 
-###		  a pop has no have at a locus to be used (else NA is 
+###		  a pop has to have at a locus to be used (else NA is 
 ### 		  returned), defaults to 8 * ploidy
 ###
 ### 	resampling.size: the number of alleles of resampled populations,
 ### 			 defaults to min.size and is not recommended to
 ### 			 exceed this value. Only results with the same 
 ### 			 resampling.size are comparable.
+###		
+###		replace: if True (default) multiple random samples are drawn 
+###				 using the frequency distribution from each original 
+###				 sample. If False each original sample is reduced to
+###				 resampling size multiple times. If unsure, use default.
 ### 	
 ### Citation:	
 ### 	
@@ -105,7 +111,9 @@ He = function(x, motif_length){
 # microsatellite motif_length lengths as a numeric vector and optionally
 # the number of iterations, the function to use, the minimum size 
 # (in alleles not individuals) a pop has no have at a locus to be used 
-# and the size to be resampled to
+# and the size to be resampled to; returns matrix of diversity indices
+# with pops as rows and loci (and mean between loci) as columns
+
 resample.ms.div = function(
 	x, 
 	ploidy, 
@@ -113,8 +121,20 @@ resample.ms.div = function(
 	iterations=1000, 
 	fn=allelic.richness, 
 	min.size=8 * ploidy, 
-	resampling.size=min.size
+	resampling.size=min.size,
+	replace=T
 ){
+	if(class( try( fn(c(2,2,4), 2) ) ) == "try-error"){
+		stop('invalid "fn" argument')
+	}
+	if(!is.numeric(fn(c(2,2,4), 2))){
+		stop('"fn" must return numeric value')
+	}
+	if(length(fn(c(2,2,4), 2)) != 1){
+		stop('"fn" must return scalar')
+	}
+	
+	
 	a = scan(x,'character',sep='\n')
 	a = a[which(a!='')]
 	a[length(a)+1] = 'pop'
@@ -123,14 +143,18 @@ resample.ms.div = function(
 	for (i in 1:length(popsizes)){
 		popsizes[i] = b[i+1] - b[i] -1
 	}
+	if(!all(popsizes > 0)){
+		stop('input file may not include empty pops')
+	}
 	pops = length(popsizes)
-	popnames = rep('', pops)
 	loci = b[1] - 2
+	locus_names = a[(1:loci) + 1]
 	
 	alleles<-list()
 	for (locus in 1:loci){
 		alleles[[locus]] = list()
 	}
+	popnames = rep('', pops)
 	for (pop in 1:pops){
 		tmp = a[-c(1:b[pop], b[pop+1]:length(a))]
 		tmp = strsplit(tmp,',')
@@ -141,24 +165,30 @@ resample.ms.div = function(
 			tmp2 = gsub('\t',' ',tmp[i])
 			tmp2 = strsplit(tmp2,  ' ')[[1]]
 			tmp2 = tmp2[tmp2 != '']
+			if(length(tmp2) != loci){
+				stop(paste('wrong number of loci in pop ',pop,' (ind ',i,')', sep=''))
+			}
 			mat[i,]	= tmp2
 		} 
 		for(locus in 1:loci){
 			if(ploidy == 1) alleles[[locus]][[pop]] = mat[,locus]
 			else {
-				tmp2 = ''
+				tmp = ''
 				field_length = length(strsplit(mat[i,locus], '')[[1]])
 				for (i in 1:nrow(mat)){
 					all_code_len = round((1/ploidy) * field_length)
 					for(j in 1:ploidy){
 						indices = ((j-1) * all_code_len + 1):(j * all_code_len)
-						tmp2 = c(tmp2, paste(strsplit(mat[i,locus],'')[[1]][indices], collapse=''))
+						tmp = c(tmp, paste(strsplit(mat[i,locus],'')[[1]][indices], collapse=''))
 					}
 				}
-				tmp2 = tmp2[-1]
-				tmp2 = as.numeric(tmp2)
-				tmp2 = tmp2[tmp2 != 0]
-				alleles[[locus]][[pop]] = tmp2
+				tmp = tmp[-1]
+				if(!all(nchar(tmp) == nchar(tmp[1]))){
+					stop(paste('wrong allelle code in pop ',pop,', locus ',locus, sep=''))
+				}
+				tmp = as.numeric(tmp)
+				tmp = tmp[tmp != 0]
+				alleles[[locus]][[pop]] = tmp
 			}
 		}
 	}
@@ -172,7 +202,7 @@ resample.ms.div = function(
 			if(length(tmp) < min.size) final.table[pop,locus] = NA
 			else{
 				for (it in 1:iterations){
-					res[it] = fn(sample(tmp, resampling.size, T), motif_lengths[locus])
+					res[it] = fn(sample(tmp, resampling.size, replace), motif_lengths[locus])
 				}
 				final.table[pop,locus] = mean(res)
 			}
@@ -187,6 +217,6 @@ resample.ms.div = function(
 	}
 	final.table = cbind(final.table, means)
 	rownames(final.table) = popnames
-	colnames(final.table) = c(a[(1:loci) + 1], 'Mean')
+	colnames(final.table) = c(locus_names, 'Mean')
 	final.table
 }
