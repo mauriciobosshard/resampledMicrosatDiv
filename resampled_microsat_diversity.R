@@ -44,8 +44,8 @@
 ### 	ploidy: if data are haploid it should be 1, if diploid 2, etc.
 ###
 ### 	motif_lengths: the lengths of the microsatellite motifs (e.g. if
-### 				   you have AT, AG, AT, AAT, CG it should be 
-###				   c(2,2,2,3,2) )
+### 		       you have AT, AG, AT, AAT, CG it should be 
+###		       c(2,2,2,3,2) )
 ###
 ### 	iterations: number of iterations. There is a default of 1000.
 ###
