@@ -28,12 +28,12 @@
 ### 	Run the main function resample.ms.div(), for example
 ### 
 ### 	x<-resample.ms.div(
-###			x = "my_genepop_file.txt",
-###			ploidy=2,
-###			motif_lengths = c(2,2,2,3),
-###			iterations=1000,
-###			fn=allelic.richness,
-###			min.size=16,
+###		x = "my_genepop_file.txt",
+###		ploidy=2,
+###		motif_lengths = c(2,2,2,3),
+###		iterations=1000,
+###		fn=allelic.richness,
+###		min.size=16,
 ### 	)
 ### 	x
 ### 
@@ -52,7 +52,7 @@
 ### 	fn: the function used to calculate the diversity index, can be 
 ### 	    allelic.richness, allelic.range, He (expected heterozigocity) 
 ### 	    or MSD (mean squared distance). Advanced users may use a 
-###			custom function modelled after functions below.
+###	    custom function modelled after functions below.
 ###
 ### 	min.size: the minimum size (in alleles not individuals) 
 ###		  a pop has to have at a locus to be used (else NA is 
@@ -64,9 +64,9 @@
 ### 			 resampling.size are comparable.
 ###		
 ###		replace: if True (default) multiple random samples are drawn 
-###				 using the frequency distribution from each original 
-###				 sample. If False each original sample is reduced to
-###				 resampling size multiple times. If unsure, use default.
+###			 using the frequency distribution from each original 
+###			 sample. If False each original sample is reduced to
+###			 resampling size multiple times. If unsure, use default.
 ### 	
 ### Citation:	
 ### 	
@@ -124,6 +124,7 @@ resample.ms.div = function(
 	resampling.size=min.size,
 	replace=T
 ){
+	# check if fn behaves correctly
 	if(class( try( fn(c(2,2,4), 2) ) ) == "try-error"){
 		stop('invalid "fn" argument')
 	}
@@ -134,7 +135,7 @@ resample.ms.div = function(
 		stop('"fn" must return scalar')
 	}
 	
-	
+	# read in file and prepare data
 	a = scan(x,'character',sep='\n')
 	a = a[which(a!='')]
 	a[length(a)+1] = 'pop'
