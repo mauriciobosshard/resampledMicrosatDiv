@@ -63,10 +63,10 @@
 ### 			 exceed this value. Only results with the same 
 ### 			 resampling.size are comparable.
 ###		
-###		replace: if True (default) multiple random samples are drawn 
-###			 using the frequency distribution from each original 
-###			 sample. If False each original sample is reduced to
-###			 resampling size multiple times. If unsure, use default.
+###	replace: if True (default) multiple random samples are drawn 
+###		 using the frequency distribution from each original 
+###		 sample. If False each original sample is reduced to
+###		 resampling size multiple times. If unsure, use default.
 ### 	
 ### Citation:	
 ### 	
