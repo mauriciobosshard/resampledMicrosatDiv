@@ -7,7 +7,7 @@ history, for example past population bottlenecks leave a signature of
 reduced population diversity even after recovery of population numbers.
 However, estimated diversity depends heavily on sample size, difficulting
 direct comparisons between samples. Suggested methods to address this 
-problem include random resampling all populations to a specific size 
+problem include random resampling of all populations to a specific size 
 (e.g. Leberg 2002). 
 
 This script is an implementation of this approach. It calculates diversity 
