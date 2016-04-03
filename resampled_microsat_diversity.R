@@ -28,7 +28,7 @@
 ### 	Run the main function resample.ms.div(), for example
 ### 
 ### 	x<-resample.ms.div(
-###		x = "my_genepop_file.txt",
+###		x = "example_genepop_file.txt",
 ###		ploidy=2,
 ###		motif_lengths = c(2,2,2,3),
 ###		iterations=1000,
