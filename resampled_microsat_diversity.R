@@ -141,7 +141,10 @@ resample.ms.div = function(
 	a = a[which(a!='')]
 	a[length(a)+1] = 'pop'
 	b = grep('Pop', a, ignore.case=T)
-	b = b[nchar(a[b]) == 3]
+	tmp = a
+	tmp[b] = gsub(' ', '', tmp[b])
+	tmp[b] = gsub('\t', '', tmp[b])
+	b = b[nchar(tmp[b]) == 3]
 	popsizes = rep(0, length(b)-1)
 	for (i in 1:length(popsizes)){
 		popsizes[i] = b[i+1] - b[i] -1
