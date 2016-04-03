@@ -13,9 +13,9 @@ problem include random resampling of all populations to a specific size
 This script is an implementation of this approach. It calculates diversity 
 indices on multiple random samples of a specified size and reports their 
 mean for each loci and in total, by population. It takes microsatellite 
-data read from a standard genepop file. Available indices include allellic 
-richness, allellic range, expected heterozigocity and mean squared 
-distance between allelles. Custom functions may also be used. 
+data read from a standard genepop file. Available indices include allelic 
+richness, allelic range, expected heterozigocity and mean squared 
+distance between alleles. Custom functions may also be used. 
 
 References:
 
