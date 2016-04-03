@@ -60,8 +60,9 @@
 ###
 ### 	resampling.size: the number of alleles of resampled populations,
 ### 			 defaults to min.size and is not recommended to
-### 			 exceed this value. Only results with the same 
-### 			 resampling.size are comparable.
+### 			 exceed this value, since results would still be
+###			 biased. Only results with the same resampling 
+###			 size are comparable.
 ###		
 ###	replace: if True (default) multiple random samples are drawn 
 ###		 using the frequency distribution from each original 
