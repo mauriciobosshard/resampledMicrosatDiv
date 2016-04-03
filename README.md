@@ -19,5 +19,5 @@ distance between allelles. Custom functions may also be used.
 
 References:
 
-Leberg PL 2002 Estimating allelic richness: Effects of sample size and 
+Leberg P.L. (2002). Estimating allelic richness: Effects of sample size and 
 bottlenecks. Molecular Ecology 11: 2445–2449
