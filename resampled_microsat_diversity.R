@@ -155,6 +155,8 @@ resample.ms.div = function(
 	pops = length(popsizes)
 	loci = b[1] - 2
 	locus_names = a[(1:loci) + 1]
+	locus_names = gsub('\t', '', locus_names)
+
 	
 	alleles<-list()
 	for (locus in 1:loci){
@@ -198,6 +200,7 @@ resample.ms.div = function(
 			}
 		}
 	}
+	popnames = gsub('\t', '', popnames)
 
 	# resampling
 	final.table = matrix(nrow=pops, ncol=loci)
