@@ -111,7 +111,7 @@ He = function(x, motif_length){
 # Main function. Takes a genpop file, ploidy as scalar, the 
 # microsatellite motif_length lengths as a numeric vector and optionally
 # the number of iterations, the function to use, the minimum size 
-# (in alleles not individuals) a pop has no have at a locus to be used 
+# (in alleles not individuals) a pop has to have at a locus to be used 
 # and the size to be resampled to; returns matrix of diversity indices
 # with pops as rows and loci (and mean between loci) as columns
 
